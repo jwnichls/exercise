@@ -53,7 +53,7 @@ class User < ActiveRecord::Base
       user.t_listed_count     = auth_hash['extra']['raw_info']['listed_count']
       user.t_statuses_count   = auth_hash['extra']['raw_info']['statuses_count']
       user.t_created_at       = auth_hash['extra']['raw_info']['created_at']
-      user.version_string     = "pilot3.july.29.2013"
+      user.version_string     = "exercise study"
       user.twitter_json       = auth_hash.to_json
       if(User.count < 1)
         user.user_level       = "admin"
