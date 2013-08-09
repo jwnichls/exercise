@@ -1,0 +1,52 @@
+<% if current_user && valence_pass %>
+	<%= render 'shared/instructions' %>
+  <div class="row display">
+		<ul class="posts">
+			<div class="create-new">
+				<div class="large-12 columns">
+					<%= link_to 'Create a new tweet', '/posts/new' %>
+				</div>
+			<div class="row display"> <!-- buffer space --> </div>
+
+			</div>
+		</ul>
+	</div>
+	<% if @posts.any? %>
+		<ul class="posts">
+			<%= render @posts %>
+		</ul>
+	<% end %>
+<% elsif current_user && !valence_pass %>
+  <%= render 'shared/hit_finished' %>
+<% elsif session[:name]  %> <!-- logged in user hasn't finished survey. display survey -->
+	<%= render 'shared/survey' %>
+
+  <%= render 'shared/hit_finished' %>
+  <div id="postindex">
+    <%= render 'shared/instructions' %>
+      <div class="row display">
+        <ul class="posts">
+          <div class="create-new">
+            <div class="large-12 columns">
+              <%= link_to 'Create a new tweet', '/posts/new' %>
+            </div>
+          <div class="row display"> <!-- buffer space --> </div>
+
+          </div>
+        </ul>
+      </div>
+      <% if @posts.any? %>
+        <ul class="posts">
+          <%= render @posts %>
+        </ul>
+      <% end %>
+    </div>
+    <script type="text/javascript">
+  $(document).ready(function() {
+    $(".hitfinished").hide();
+  });
+
+  </script>
+<% else %>
+	<%= render 'shared/login_services' %>
+<% end %>

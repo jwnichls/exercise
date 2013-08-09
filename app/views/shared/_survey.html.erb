@@ -1,0 +1,57 @@
+<div class="row survey" id="survey">
+    <fieldset>
+      <legend>Survey Required to Participate</legend>
+        <%= form_for @survey, :remote => true, 'data-type'=>'json' do |f| %>
+        Please respond to the statements and questions below. You must complete all items to submit the survey and participate.
+        <div class="row likert">      
+          <div class="large 12 columns">
+              <label>I believe that George Zimmerman is innocent.</label><span class="error-label"></span>
+              <%= f.radio_button :ls1, '1'  %> 
+              <span class="radio-label">Strongly Disagree</span>
+              <%= f.radio_button :ls1, '2' %> 
+              <span class="radio-label">Somewhat Disagree</span>
+              <%= f.radio_button :ls1, '3' %> 
+              <span class="radio-label">Neither Agree nor Disagree</span>
+              <%= f.radio_button :ls1, '4' %> 
+              <span class="radio-label">Somewhat Agree</span>
+              <%= f.radio_button :ls1, '5' %> 
+              <span class="radio-label">Strongly Agree</span>
+          </div>
+        </div>
+        <div class="row likert">
+          <div class="large 12 columns">
+              <label>I don't think that it's my place to try to convince anyone else about the case.</label><span class="error-label"></span>
+              <%= f.radio_button :ils1, '1' %> 
+              <span class="radio-label">Strongly Disagree</span>
+              <%= f.radio_button :ils1, '2' %> 
+              <span class="radio-label">Somewhat Disagree</span>
+              <%= f.radio_button :ils1, '3' %> 
+              <span class="radio-label">Neither Agree nor Disagree</span>
+              <%= f.radio_button :ils1, '4' %> 
+              <span class="radio-label">Somewhat Agree</span>
+              <%= f.radio_button :ils1, '5' %> 
+              <span class="radio-label">Strongly Agree</span>
+          </div>
+        </div>
+        <div class="row likert">
+          <div class="large 12 columns">
+              <label>I think people would agree with me if I could explain my position to them.</label><span class="error-label"></span>
+              <%= f.radio_button :ls2, '1' %> 
+              <span class="radio-label">Strongly Disagree</span>
+              <%= f.radio_button :ls2, '2' %> 
+              <span class="radio-label">Somewhat Disagree</span>
+              <%= f.radio_button :ls2, '3' %> 
+              <span class="radio-label">Neither Agree nor Disagree</span>
+              <%= f.radio_button :ls2, '4' %> 
+              <span class="radio-label">Somewhat Agree</span>
+              <%= f.radio_button :ls2, '5' %> 
+              <span class="radio-label">Strongly Agree</span>
+          </div>
+        </div>
+        <%= f.hidden_field :user_id, { :value => session[:uid]} %>
+        <%= f.submit "Submit Survey Responses", class: "btn btn-large btn-primary", :id => 'surveyform' %>
+      <% end %> 
+  
+    </fieldset>
+
+    </div>

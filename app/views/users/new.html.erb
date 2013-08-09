@@ -1,0 +1,27 @@
+<script src="https://browserid.org/include.js" type="text/javascript"></script>
+    <script type='text/javascript'>
+      function loginViaEmail() {
+        navigator.id.get(function(assertion) {
+          if (assertion) {
+            $('input[name=assertion]').val(assertion);
+            $('#browser_id_form').submit();
+          } else {
+            window.location = "#{failure_path}"
+          }
+        });  
+      }
+
+      $(function() {
+        $('#browser_id_form button').click(function() {
+          loginViaEmail();
+          return false;
+        });
+      });
+    </script>
+<h1>Users#new</h1>
+<p>Find me in app/views/users/new.html.erb</p>
+
+<form id='persona_form' class="persona_login" action='/auth/persona/callback'>
+	      		<input type='hidden' name='assertion'/>
+	      		<button type='submit'>Login with Persona</button>
+  			</form>

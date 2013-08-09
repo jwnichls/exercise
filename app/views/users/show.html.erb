@@ -1,0 +1,21 @@
+<% provide(:title, 'Your profile') %>
+
+<div class="panel">
+	<div class="row display">
+		Your authentication code: <%= session[:auth_code] %>
+      <%#= render 'shared/error_messages' %>
+  </div><br/>
+  <div class="row display">
+  	Your user level: <%= @userlevel %>
+  </div>
+</div>
+	
+<% if @posts.count && @posts.count > 0 %>
+  
+    <h3>Posts (<%= @posts.count %>)</h3>
+    
+      <%= render @posts %>
+
+    <%#= will_paginate @posts %>
+  
+<% end %>

@@ -1,0 +1,22 @@
+<% provide(:title, 'Home') %>
+
+<div class="panel">
+	<div class="display row">
+	<h1>Welcome to the discussion about the Trayvon Martin/George Zimmerman case.</h1>
+	
+
+	<% if(current_user) %>
+		<!--<h3>Welcome <%= session[:name] %>!</h3>-->
+		<h3>Drive <%= link_to 'The Discussion', '/posts' %></h3>
+	<% elsif(session[:name])%>
+		<h3>Please complete a <%= link_to '3 question survey','/posts' %> to get started driving the discussion.</h3>	
+	<script type="text/javascript">
+    //window.location.href="/posts/"  // put your correct path in a string here
+  </script>
+	<% else %>
+		<h3>
+	  	<%= render 'shared/login_services' %>
+  	</h3>
+  <% end %>
+</div>
+</div>

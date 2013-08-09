@@ -1,0 +1,5 @@
+<div class="row display fade-in one">
+	<% flash.each do |key, value| %>
+  	<div class="panel alert alert-<%= key %>"><%= raw value %></div>
+	<% end %>
+</div>

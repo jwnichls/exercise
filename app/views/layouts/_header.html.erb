@@ -1,0 +1,24 @@
+
+ <div class="row display">
+  <ul class="breadcrumbs">
+	  	<li class="breadcrumb"><a href="#">Home</a></li> 
+	  	<li class="breadcrumb unavailable"><a href="#">Help</a></li>
+	  	<li class="breadcrumb">
+	  		<%= link_to 'Discussion', '/posts/' %>
+	  	</li>
+	  	
+	  	<% if current_user || session[:uid] %>
+		  	<%#= link_to session[:name], {:action => "show", :controller => "users", :id => User.find_by_uid(session[:uid])} %>
+  			<li class="breadcrumb">
+  			<%= link_to session[:name], {:action => "show", :controller => "users", :id => User.find(session[:uid])} %>
+	  		</li>
+	  	<li class="breadcrumb"><%= link_to 'Logout', '/sessions/destroy' %>
+	  	<% else %>
+	  		<li class="breadcrumb"><%= link_to 'Login with Twitter', '/auth/twitter' %></li>
+  		<% end %>
+  		<% if admin %>
+  			<li class="breadcrumb"><%= link_to 'Admin Controls', '/admin/' %></li>
+  		<% end %>
+	  	<!--<li class="breadcrumb current"><a href="#">Cloning</a></li>-->
+	  	</ul>
+</div>

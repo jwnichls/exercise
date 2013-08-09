@@ -1,0 +1,64 @@
+<div class="row display">
+	<% if current_user && current_user.votes.exists?(post_id: post.id, vote_type: 'up') %>
+		<div class="post upvote">
+	<% elsif current_user && current_user.votes.exists?(post_id: post.id, vote_type: 'down') %>
+		 <div class="post downvote">
+	<% else %>
+			<div class="post">
+	<% end %>
+		<div class="large-6 columns">
+			<% if post.vote_count > 5 %>
+				<div class="small-1 columns">
+					<%= image_tag("star.gif", :alt => "Recommended Tweet", :size => "25x25", :class => "star") %>
+				</div>
+			<% end %>
+		
+			<%= simple_format(post.body) %>
+
+		</div>
+		<div class="large-2 columns">
+   			<%= time_ago_in_words(post.created_at) %> old.
+		</div>
+		<div class="large-2 columns"><%= link_to "@" + post.user.t_nickname, {:action => "show", :controller => "users", :id => post.user.id} %>
+		</div>
+		<div class="row">
+			<div class="large-2 columns" style="text-align: center;">
+				
+					<% if !post.tweets.find_by_user_id(current_user) %>
+				<div class="small-6 columns">
+						<%= link_to image_tag("twitterbuttonbig.png", :size => "110x60"), {:action => "tweet", :controller => "tweets", :id => post.id} %>
+						</div>
+					<% elsif %>
+					<div class="small-6 columns">
+					 <p></p>
+					</div>
+					<% end %>
+			
+			<%# else %>
+				<%#= link_to 'RT', {:action => "retweet", :controller => "tweets", :id => post.id} %>
+			<%# end %>
+			<%#= link_to 'up', '/votes/create', data: {post: => post.id} %>
+			<%= link_to image_tag("arrow.up.png", :size => "25x25"), new_post_vote_path(post, :vote_type => 'up') %>
+			<%= post.vote_count %>
+			<%= link_to image_tag("arrow.down.png", :size => "25x25"), new_post_vote_path(post, :vote_type => 'down')  %></div>
+		</div>
+		<% if post.user.id == session[:uid] %>
+		<!--	<div class="row display">
+				<div class="large-12 columns">
+					<%#= link_to "Delete this post", {:action => "delete", :controller => "posts", :postid => post.id} %>
+					<%= link_to "Delete this post", {:action => "unpost", :controller => "posts", :id => post.id} %>
+				</div>
+			</div>-->
+		<% end %>
+		<% if admin %>
+			<div class="row display">
+				<div class="large-12 columns">
+					<%#= link_to "Delete this post", {:action => "delete", :controller => "posts", :postid => post.id} %>
+					<%= link_to "Disable this post", {:action => "disable", :controller => "posts", :id => post.id} %>
+				</div>
+			</div>
+		<% end %>
+		<div class="row display"> <!-- buffer space --> </div>
+	</div>			
+		
+</div>

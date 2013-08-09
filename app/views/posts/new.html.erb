@@ -1,0 +1,27 @@
+<% if current_user && valence_pass%>
+  <%= render 'shared/instructions' %>
+  <div class="row display">
+    <%= form_for(@post) do |f| %>
+      
+
+      <label>Write a new tweet about the case. Must be less than 140 characters.</label>
+      <%= f.text_field :body, :id => "BodyText", :onKeyUp => "processPost('BodyText','CharacterCounter')", :onBlur => "processPost('BodyText','CharacterCounter')" %>
+      <span id="CharacterCounter">140 Characters Remaining</span>
+
+
+      <input type="hidden" name="userid" id="userid" value="<%= session[:userid] %>" />
+
+			<br/><br/>
+      <%= f.submit "Create my post", class: "btn", id: 'new-post' %>
+      <%= f.submit "Create and Tweet my post", class: "btn", id: 'tweet-post' %>
+      <%#= link_to 'Create post and tweet it', "/posts", :onclick => "processAndTweet('BodyText')" %>
+    <% end %>
+  </div>
+
+<% elsif !valence_pass %>	  
+  <%= render 'shared/hit_finished' %>
+<% else %>
+  <div class="row display error">
+    <%= link_to 'You must fill out the survey before you can participate', '/posts' %>
+  </div>
+<% end %>

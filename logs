@@ -1,0 +1,14 @@
+-- create_table("authorizations", {:force=>true})
+   -> 0.3031s
+-- create_table("posts", {:force=>true})
+   -> 0.1401s
+-- create_table("surveys", {:force=>true})
+   -> 0.1397s
+-- create_table("tweets", {:force=>true})
+   -> 0.1481s
+-- create_table("users", {:force=>true})
+   -> 0.1246s
+-- create_table("votes", {:force=>true})
+   -> 0.1152s
+-- initialize_schema_migrations_table()
+   -> 0.0035s
