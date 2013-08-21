@@ -1,0 +1,37 @@
+<h1>Listing campaigns</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Name</th>
+      <th>Instructions</th>
+      <th>Survey question one</th>
+      <th>Survey question two</th>
+      <th>Survey question three</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @campaigns.each do |campaign| %>
+      <tr>
+        <td><%= campaign.user_id %></td>
+        <td><%= campaign.name %></td>
+        <td><%= campaign.instructions %></td>
+        <td><%= campaign.survey_question_one %></td>
+        <td><%= campaign.survey_question_two %></td>
+        <td><%= campaign.survey_question_three %></td>
+        <td><%= link_to 'Show', campaign %></td>
+        <td><%= link_to 'Edit', edit_campaign_path(campaign) %></td>
+        <td><%= link_to 'Destroy', campaign, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Campaign', new_campaign_path %>
