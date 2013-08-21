@@ -9,9 +9,9 @@ Iborg::Application.routes.draw do
   # Posts
 
   resources :posts, :except => [:destroy] do
-    resources :votes
-    
     member do
+      get "vote_up"
+      get "vote_down"
       get :unpost, :as => "unpost"
       get :disable, :as => "disable"
     end

@@ -45,7 +45,6 @@ class PostsController < ApplicationController
     redirect_to '/posts'
   end
 
-
   def disable   
     post = Post.find(params[:id]);
     if post.update_attributes(:disabled => 'true')
@@ -54,5 +53,24 @@ class PostsController < ApplicationController
       flash[:error] = "Something went wrong. Post not deleted."
     end
     redirect_to '/posts'
+  end
+  
+  def vote_up
+    vote(params[:id], "up")
+    
+    redirect_to posts_path
+  end
+  
+  def vote_down
+    vote(params[:id], "down")
+    
+    redirect_to posts_path
+  end
+  
+  private
+  
+  def vote(post_id, type)
+    @post = Post.find(post_id)
+    current_user.toggle_vote(@post, type)
   end
 end

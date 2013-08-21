@@ -38,9 +38,9 @@
 				<%#= link_to 'RT', {:action => "retweet", :controller => "tweets", :id => post.id} %>
 			<%# end %>
 			<%#= link_to 'up', '/votes/create', data: {post: => post.id} %>
-			<%= link_to image_tag("arrow.up.png", :size => "25x25"), new_post_vote_path(post, :vote_type => 'up') %>
+			<%= link_to image_tag("arrow.up.png", :size => "25x25"), vote_up_post_path(post) %>
 			<%= post.vote_count %>
-			<%= link_to image_tag("arrow.down.png", :size => "25x25"), new_post_vote_path(post, :vote_type => 'down')  %></div>
+			<%= link_to image_tag("arrow.down.png", :size => "25x25"), vote_down_post_path(post)  %></div>
 		</div>
 		<% if post.user.id == session[:uid] %>
 		<!--	<div class="row display">
