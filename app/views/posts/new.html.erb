@@ -1,4 +1,4 @@
-<% if current_user && valence_pass%>
+<% if current_user && valence_pass? %>
   <%= render 'shared/instructions' %>
   <div class="row display">
     <%= form_for(@post) do |f| %>
@@ -18,7 +18,7 @@
     <% end %>
   </div>
 
-<% elsif !valence_pass %>	  
+<% elsif !valence_pass? %>	  
   <%= render 'shared/hit_finished' %>
 <% else %>
   <div class="row display error">

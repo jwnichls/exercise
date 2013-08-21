@@ -8,21 +8,14 @@ Iborg::Application.routes.draw do
 
   # Posts
 
-  get "posts", :to => "posts#index", :as => "index"
-  resource "posts"
-  get "posts/unpost", :to => "posts#unpost", :as => "unpost" 
-  get "posts/disable", :to => "posts#disable", :as => "disable"
-
-  #match "surveyresponses/new", :to => "surveyresponses#create"
-  #get 'surveyresponses/new'
-  resources :posts do
+  resources :posts, :except => [:destroy] do
     resources :votes
-    #resources :surveyresponses
+    
+    member do
+      get :unpost, :as => "unpost"
+      get :disable, :as => "disable"
+    end
   end
-  
-  # Votes
-  
-  get 'votes/create'
   
   # Surveys
 

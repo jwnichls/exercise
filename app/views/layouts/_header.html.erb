@@ -7,10 +7,9 @@
 	  		<%= link_to 'Discussion', '/posts/' %>
 	  	</li>
 	  	
-	  	<% if current_user || session[:uid] %>
-		  	<%#= link_to session[:name], {:action => "show", :controller => "users", :id => User.find_by_uid(session[:uid])} %>
+	  	<% if current_user %>
   			<li class="breadcrumb">
-  			<%= link_to session[:name], {:action => "show", :controller => "users", :id => User.find(session[:uid])} %>
+  				<%= link_to session[:name], users_show_path %>
 	  		</li>
 	  	<li class="breadcrumb"><%= link_to 'Logout', logout_path %>
 	  	<% else %>
