@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130730012933) do
+ActiveRecord::Schema.define(version: 20130821182324) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 20130730012933) do
     t.boolean  "deleted",    default: false, null: false
     t.integer  "vote_count", default: 0,     null: false
     t.boolean  "disabled",   default: false, null: false
+    t.text     "tweet_body"
   end
 
   create_table "sessions", force: true do |t|
@@ -67,6 +68,7 @@ ActiveRecord::Schema.define(version: 20130730012933) do
     t.string   "tweet_type"
     t.integer  "user_id"
     t.integer  "post_id"
+    t.text     "tweet_json"
   end
 
   create_table "users", force: true do |t|
@@ -74,9 +76,6 @@ ActiveRecord::Schema.define(version: 20130730012933) do
     t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "audience"
-    t.string   "provider"
-    t.string   "expires"
     t.string   "t_nickname"
     t.string   "t_location"
     t.string   "t_image"
@@ -92,6 +91,8 @@ ActiveRecord::Schema.define(version: 20130730012933) do
     t.string   "version_string"
     t.string   "user_level",        default: "contributor"
     t.string   "condition"
+    t.string   "turkerId"
+    t.text     "twitter_json"
   end
 
   create_table "votes", force: true do |t|
