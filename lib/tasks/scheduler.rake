@@ -5,6 +5,7 @@ task :disable_old_posts => :environment do
   puts "done."
 end
 
+# TODO: Generalize this to a campaign and add a campaign id argument
 task :launch_hit => :environment do
 
 	begin ; require 'rubygems' ; rescue LoadError ; end

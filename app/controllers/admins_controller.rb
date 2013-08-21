@@ -1,5 +1,7 @@
 class AdminsController < ApplicationController
 
+  # TODO: Campaignify
+
 	def index
 
 	end

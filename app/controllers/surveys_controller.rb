@@ -7,6 +7,9 @@ class SurveysController < ApplicationController
     @sr = Survey.new params[:survey]
     respond_to do |format|  
 	
+	    # TODO: Refactor?
+	    # Maybe there should be a surveys controller for setting up the surveys and a survey entry controller for filling them out
+	    # Furthermore, assignment into conditions should probably be handled somewhere else, perhaps in the users model
 			if @sr.save
 				
 				@user = User.find(session[:uid]).update_attributes(:survey_id => @sr.id)

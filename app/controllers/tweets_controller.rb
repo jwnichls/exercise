@@ -6,11 +6,13 @@ class TweetsController < ApplicationController
 	def follow
 		if(params[:followee] == nil)
 			Tweet.follow(current_user.id,nil)
+			# TODO: Hardcoded user id for campaign
 			flash[:success] = "You followed: @" + User.find(1).t_nickname
 		else
 			Tweet.follow(current_user.id,params[:followee])
 			flash[:success] = "You followed: @" + User.find(params[:followee]).t_nickname
 		end
+		# hardcoded action
 		redirect_to '/posts'
 	end
 
@@ -32,6 +34,7 @@ class TweetsController < ApplicationController
 		else
 			flash[:error] = "Error. Tweet not created"
 		end
+		# hardcoded action
 		redirect_to '/posts'
 	end
 

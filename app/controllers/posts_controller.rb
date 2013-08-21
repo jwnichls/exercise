@@ -1,4 +1,6 @@
 class PostsController < ApplicationController
+
+  # TODO: Campaignify
   
   def new
   	@post = Post.new

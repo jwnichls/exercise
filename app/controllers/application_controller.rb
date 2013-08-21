@@ -1,19 +1,10 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  helper_method :admin
-  helper_method :current_user
-  before_filter :current_user
-  helper_method :valence_pass
-  before_filter :valence_pass
-  helper_method :valence
-  before_filter :valence
-  helper_method :master_user
-  before_filter :master_user
-  
+  helper_method :admin?, :current_user, :valence_pass?, :valence, :master_user  
 
   private
 
-  def admin
+  def admin?
     if current_user || session[:uid]
       return User.find(session[:uid]).user_level == "admin"
     else
@@ -22,6 +13,7 @@ class ApplicationController < ActionController::Base
   end
 
   def master_user
+    # TODO: Determine by campaign
     return User.find_by_user_level("admin")
   end
 
@@ -48,7 +40,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def valence_pass
+  def valence_pass?
     if(valence && valence > 1)
       return true
     else
@@ -56,7 +48,4 @@ class ApplicationController < ActionController::Base
     end
   end
 
-
-
-  
 end
