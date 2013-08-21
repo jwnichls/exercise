@@ -13,23 +13,25 @@
 
 ActiveRecord::Schema.define(version: 20130730012933) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "authorizations", force: true do |t|
     t.string   "provider"
     t.string   "uid"
     t.string   "user"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "user_id"
   end
 
   create_table "posts", force: true do |t|
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.text     "body"
     t.integer  "user_id"
     t.boolean  "deleted",    default: false, null: false
     t.integer  "vote_count", default: 0,     null: false
-    t.text     "tweet_body"
     t.boolean  "disabled",   default: false, null: false
   end
 
@@ -54,26 +56,27 @@ ActiveRecord::Schema.define(version: 20130730012933) do
     t.text     "url2"
     t.text     "tweet1"
     t.text     "tweet2"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "tweets", force: true do |t|
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "tweet_id",   limit: 8
     t.string   "tweet_type"
     t.integer  "user_id"
     t.integer  "post_id"
-    t.text     "tweet_json"
   end
 
   create_table "users", force: true do |t|
-    t.string   "turkerId"
     t.string   "name"
     t.string   "email"
-    t.datetime "created_at",                                null: false
-    t.datetime "updated_at",                                null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "audience"
+    t.string   "provider"
+    t.string   "expires"
     t.string   "t_nickname"
     t.string   "t_location"
     t.string   "t_image"
@@ -88,7 +91,6 @@ ActiveRecord::Schema.define(version: 20130730012933) do
     t.integer  "survey_id"
     t.string   "version_string"
     t.string   "user_level",        default: "contributor"
-    t.text     "twitter_json"
     t.string   "condition"
   end
 
@@ -96,8 +98,8 @@ ActiveRecord::Schema.define(version: 20130730012933) do
     t.integer  "post_id"
     t.integer  "user_id"
     t.string   "vote_type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end
