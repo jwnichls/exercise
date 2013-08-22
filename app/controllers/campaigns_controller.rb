@@ -8,6 +8,9 @@ class CampaignsController < ApplicationController
 
   # GET /campaigns/1
   def show
+  	if(params[:turkerId])
+  		session[:turkerId] = params[:turkerId]
+  	end
   end
 
   # GET /campaigns/new

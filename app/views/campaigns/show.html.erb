@@ -1,34 +1,22 @@
-<p id="notice"><%= notice %></p>
+<% provide(:title, 'Home') %>
 
-<p>
-  <strong>User:</strong>
-  <%= @campaign.user_id %>
-</p>
+<div class="panel">
+	<div class="display row">
+	<h1>Welcome to the <%= @campaign.name %></h1>
+	
 
-<p>
-  <strong>Name:</strong>
-  <%= @campaign.name %>
-</p>
-
-<p>
-  <strong>Instructions:</strong>
-  <%= @campaign.instructions %>
-</p>
-
-<p>
-  <strong>Survey question one:</strong>
-  <%= @campaign.survey_question_one %>
-</p>
-
-<p>
-  <strong>Survey question two:</strong>
-  <%= @campaign.survey_question_two %>
-</p>
-
-<p>
-  <strong>Survey question three:</strong>
-  <%= @campaign.survey_question_three %>
-</p>
-
-<%= link_to 'Edit', edit_campaign_path(@campaign) %> |
-<%= link_to 'Back', campaigns_path %>
+	<% if(current_user) %>
+		<!--<h3>Welcome <%= session[:name] %>!</h3>-->
+		<h3>Drive <%= link_to 'The Discussion', '/posts' %></h3>
+	<% elsif(session[:name])%>
+		<h3>Please complete a <%= link_to '3 question survey','/posts' %> to get started driving the discussion.</h3>	
+	<script type="text/javascript">
+    //window.location.href="/posts/"  // put your correct path in a string here
+  </script>
+	<% else %>
+		<h3>
+	  	<%= render 'shared/login_services' %>
+  	</h3>
+  <% end %>
+</div>
+</div>

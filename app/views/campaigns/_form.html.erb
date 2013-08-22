@@ -13,7 +13,7 @@
 
   <div class="field">
     <%= f.label :user_id %><br>
-    <%= f.number_field :user_id %>
+    <%= f.collection_select(:user_id, User.all, :id, :t_screen_name, prompt: true) %>
   </div>
   <div class="field">
     <%= f.label :name %><br>
