@@ -18,23 +18,16 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-  	if session[:uid]
-      return User.finished_survey(session[:uid])
-  	else
-  		#flash[:warning] = "Please login to continue."
-		#session[:return_to] = request.request_uri
-		#redirect_to '/static_pages/home'
-		  return nil
+    if session[:uid]
+      User.find(session[:uid])
+    else
+      nil
     end
   end	
 
   def valence
-    if session[:uid]
-      if User.finished_survey(session[:uid])
-        return User.valence(session[:uid])
-      else
-        return nil
-      end
+    if current_user && current_user.has_survey_for_campaign?(@campaign)
+      return current_user.valence(@campaign)
     else
       return nil
     end

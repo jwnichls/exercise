@@ -5,11 +5,10 @@
 	<h1>Welcome to the <%= @campaign.name %></h1>
 	
 
-	<% if(current_user) %>
-		<!--<h3>Welcome <%= session[:name] %>!</h3>-->
-		<h3>Drive <%= link_to 'The Discussion', '/posts' %></h3>
-	<% elsif(session[:name])%>
-		<h3>Please complete a <%= link_to '3 question survey','/posts' %> to get started driving the discussion.</h3>	
+	<% if current_user && current_user.has_survey_for_campaign?(@campaign) %>
+		<h3>Drive <%= link_to 'The Discussion', campaign_posts_path(@campaign) %></h3>
+	<% elsif current_user %>
+		<h3>Please complete a <%= link_to '3 question survey', campaign_posts_path(@campaign) %> to get started driving the discussion.</h3>	
 	<script type="text/javascript">
     //window.location.href="/posts/"  // put your correct path in a string here
   </script>

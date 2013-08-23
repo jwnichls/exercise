@@ -12,24 +12,23 @@ class SurveysController < ApplicationController
 	    # Furthermore, assignment into conditions should probably be handled somewhere else, perhaps in the users model
 			if @sr.save
 				
-				@user = User.find(session[:uid]).update_attributes(:survey_id => @sr.id)
-				format.html { redirect_to('/posts') }  
+				format.html { redirect_to campaign_posts_path(@sr.campaign) }  
 				
 				if @sr.getValenceScore > 2 
 					#roll the dice to see which condition they're in. 1-20 goes to control group
 					if rand(1..100) < 20
-						 User.find(session[:uid]).update_attributes(:condition => "control")
+						 current_user.update_attributes(:condition => "control")
 						format.js { sleep 1; render :json => 1}
 					else
-						 User.find(session[:uid]).update_attributes(:condition => "participant")
+						 current_user.update_attributes(:condition => "participant")
 						format.js { sleep 1; render :json => 2 }
 					end
 				else
-					 User.find(session[:uid]).update_attributes(:condition => "lowvalence")
+					 current_user.update_attributes(:condition => "lowvalence")
 					format.js { sleep 1; render :json => 3 }
 					end
 			else
-				format.html { redirect_to('/posts') }  
+				format.html { redirect_to campaign_posts_path(@sr.campaign) }
       	format.js { sleep 1; render :json => @sr.getValenceScore }
 			end
 		end

@@ -1,2 +1,2 @@
-* Get posts, votes, and surveys working as sub-elements of campaigns
-* Make actions of the static_pages controller actions on the new campaigns controller
+* fix admin links
+* restrict access to the campaign configuration and index

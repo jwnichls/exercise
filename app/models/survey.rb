@@ -18,7 +18,9 @@
 #
 
 class Survey < ActiveRecord::Base
-	attr_accessible :user_id, :ls1, :ls2, :ls3, :ils1, :sanitycheck1, :url1, :url2, :tweet1, :tweet2
+	attr_accessible :user_id, :ls1, :ls2, :ls3, :ils1, :sanitycheck1, :url1, :url2, :tweet1, :tweet2, :campaign_id
+  belongs_to :user
+  belongs_to :campaign
 
   def getValenceScore
   	#return Integer(ls1.to_s) + Integer(ls2.to_s) - Integer(ils1.to_s)

@@ -4,24 +4,25 @@ Iborg::Application.routes.draw do
 
   # Campaigns
   
-  resources :campaigns
-
-  # Posts
-
-  resources :posts, :except => [:destroy] do
+  resources :campaigns do
+    resources :posts, :except => [:destroy] do
+      member do
+        get "vote_up"
+        get "vote_down"
+        get :unpost, :as => "unpost"
+        get :disable, :as => "disable"
+        get :tweet
+      end
+    end
+    
     member do
-      get "vote_up"
-      get "vote_down"
-      get :unpost, :as => "unpost"
-      get :disable, :as => "disable"
+      get :follow
     end
   end
-  
+
   # Surveys
 
   resource :surveys
-
-
 
   # Authentication
 

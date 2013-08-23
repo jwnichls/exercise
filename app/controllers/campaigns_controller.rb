@@ -11,6 +11,8 @@ class CampaignsController < ApplicationController
   	if(params[:turkerId])
   		session[:turkerId] = params[:turkerId]
   	end
+  	
+  	session[:campaign_id] = @campaign.id
   end
 
   # GET /campaigns/new
@@ -47,6 +49,18 @@ class CampaignsController < ApplicationController
     @campaign.destroy
     redirect_to campaigns_url, notice: 'Campaign was successfully destroyed.'
   end
+  
+  def follow    
+		if(params[:followee] == nil)
+			Tweet.follow(current_user.id,nil)
+			flash[:success] = "You followed: @" + @campaign.user.t_nickname
+		else
+			Tweet.follow(current_user.id,params[:followee])
+			flash[:success] = "You followed: @" + User.find(params[:followee]).t_nickname
+		end
+
+		redirect_to campaign_posts_path(@campaign)
+	end
 
   private
     # Use callbacks to share common setup or constraints between actions.

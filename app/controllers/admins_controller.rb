@@ -7,6 +7,10 @@ class AdminsController < ApplicationController
 	end
 
 	def export
+	  if session[:campaign_id]
+	    @campaign = Campaign.find(session[:campaign_id])
+    end
+	  
 		if(admin)
 			if(params[:tablename] != 'All')
 				csv = params[:tablename].constantize.generateCSV		
@@ -41,7 +45,8 @@ class AdminsController < ApplicationController
 					  posts
 					WHERE 
 					  users.id = surveys.user_id AND
-					  posts.user_id = users.id;"
+					  posts.user_id = users.id AND
+					  posts.campaign_id = %{@campaign.id};"
 				
 				data = ActiveRecord::Base.connection.execute(sql)
 

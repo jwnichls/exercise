@@ -14,9 +14,10 @@
 #
 
 class Post < ActiveRecord::Base
-	attr_accessible :body, :user_id, :deleted, :vote_count, :tweet_body, :disabled
+	attr_accessible :body, :user_id, :deleted, :vote_count, :tweet_body, :disabled, :campaign_id
 
 	belongs_to :user
+	belongs_to :campaign
 
   has_many :tweets
 	has_many :posts, dependent: :destroy
@@ -38,18 +39,6 @@ class Post < ActiveRecord::Base
       post.update_attributes(:disabled => true)
     end
   end
-
-  def self.post(body,userid)
-
-    @post = Post.new :tweet_body => bitlify(body), :user_id => userid, :body => body
-    if @post.save
-
-      return @post.id
-    else 
-     return -1
-    end
-  end
-
 
   def self.bitlify(content)
     client = Bitly.client

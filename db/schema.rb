@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130821201726) do
+ActiveRecord::Schema.define(version: 20130822231830) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,10 +41,11 @@ ActiveRecord::Schema.define(version: 20130821201726) do
     t.datetime "updated_at"
     t.text     "body"
     t.integer  "user_id"
-    t.boolean  "deleted",    default: false, null: false
-    t.integer  "vote_count", default: 0,     null: false
-    t.boolean  "disabled",   default: false, null: false
+    t.boolean  "deleted",     default: false, null: false
+    t.integer  "vote_count",  default: 0,     null: false
+    t.boolean  "disabled",    default: false, null: false
     t.text     "tweet_body"
+    t.integer  "campaign_id"
   end
 
   create_table "sessions", force: true do |t|
@@ -70,6 +71,7 @@ ActiveRecord::Schema.define(version: 20130821201726) do
     t.text     "tweet2"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "campaign_id"
   end
 
   create_table "tweets", force: true do |t|
@@ -98,7 +100,6 @@ ActiveRecord::Schema.define(version: 20130821201726) do
     t.integer  "t_listed_count"
     t.integer  "t_statuses_count"
     t.string   "t_created_at"
-    t.integer  "survey_id"
     t.string   "version_string"
     t.string   "user_level",        default: "contributor"
     t.string   "condition"

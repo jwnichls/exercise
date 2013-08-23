@@ -1,15 +1,8 @@
 <div class="row panel instructions warning">
 	<h3>Thanks for the discussion!
-	<%= link_to image_tag("followus.png", :size => "100x20"), {:action => "follow", :controller => "tweets"} %>
+	<%= link_to image_tag("followus.png", :size => "100x20"), follow_campaign_path(@campaign) %>
 	</h3>
 	<p>
-		We are running a Twitter account to help remind people to exercise. Please help us write tweets for this account.
-		<ul>
-			<li>Write at least 3 awesome tweets that will encourage people to exercise.</li>
-			<li>Vote for at least 5 tweets that others have written. Vote UP the best and vote DOWN the worst.</li>
-			<li>Wherever you can, use #hashtags to label topics. For example #exercise, #fitness, and #health are good ones to use when they fit into the tweet.</li>
-			<li>Whenever possible, include links to news articles about the benefits of exercise.</li>
-			<li>Please help by clicking the Tweet button on the best posts!</li>
-		</ul>
+		<%= raw(@campaign.instructions) %>
 	</p>
 </div>

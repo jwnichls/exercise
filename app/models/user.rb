@@ -35,8 +35,8 @@ class User < ActiveRecord::Base
   has_many :authorizations
   has_many :posts, dependent: :destroy
   has_many :votes
+  has_many :surveys
   validates :name, :presence => true
-  #has_one :survey_id
   
   def self.create_with_omniauth(auth_hash, turkerId)
     create! do |user|
@@ -83,11 +83,10 @@ class User < ActiveRecord::Base
     return csv_string
   end
 
-
-  def self.valence(uid) 
-    u = User.find(uid)
-    if(u && u.survey_id)
-      return Survey.find(u.survey_id).getValenceScore
+  def valence(campaign)
+    survey = self.surveys.find_by_campaign_id(campaign.id)
+    if(survey)
+      return survey.getValenceScore
     else
       return nil
     end
@@ -99,6 +98,10 @@ class User < ActiveRecord::Base
   	end
   end
 	
+	def has_survey_for_campaign?(campaign)
+	  self.surveys.find_by_campaign_id(campaign.id)
+  end
+  
   #def voted?(post_id)
   #  votes.exists?(post_id: post_id)
   #end

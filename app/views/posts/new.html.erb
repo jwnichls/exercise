@@ -1,10 +1,12 @@
 <% if current_user && valence_pass? %>
   <%= render 'shared/instructions' %>
   <div class="row display">
-    <%= form_for(@post) do |f| %>
+    <%= form_for [@campaign,@post] do |f| %>
       
 
       <label>Write a new tweet about the case. Must be less than 140 characters.</label>
+	  <%= f.hidden_field :campaign_id %>
+	  <%= f.hidden_field :user_id %>
       <%= f.text_field :body, :id => "BodyText", :onKeyUp => "processPost('BodyText','CharacterCounter')", :onBlur => "processPost('BodyText','CharacterCounter')" %>
       <span id="CharacterCounter">140 Characters Remaining</span>
 

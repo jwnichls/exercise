@@ -21,9 +21,11 @@ class SessionsController < ApplicationController
       flash[:success] = "Hi #{authorization.user.name}! Thanks for signing up."
     end
 
-  	redirect_to "/static_pages/home/"
-  	#render :text => session[:email]
-
+    if session[:campaign_id]
+  	  redirect_to Campaign.find(session[:campaign_id])
+	  else
+	    redirect_to campaigns_path
+    end
   end
 
   def failure
@@ -34,7 +36,11 @@ class SessionsController < ApplicationController
   	session[:uid] = nil;
   	session[:name] = nil;
     session[:turkerId] = nil;
-  	redirect_to "/static_pages/home/"
-  	#render :text => "You've logged out!"
+
+    if session[:campaign_id]
+  	  redirect_to Campaign.find(session[:campaign_id])
+	  else
+	    redirect_to campaigns_path
+    end
   end
 end
