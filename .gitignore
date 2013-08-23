@@ -12,6 +12,7 @@
 
 # Ignore all logfiles and tempfiles.
 /log/*.log
+/ruby-aws.log
 /tmp
 
 # Ignore the .env configuration file that contains private information
