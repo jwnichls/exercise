@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  hit_id: MyString
+  hit_type_id: MyString
+  valid: false
+
+two:
+  hit_id: MyString
+  hit_type_id: MyString
+  valid: false

@@ -14,4 +14,7 @@
 /log/*.log
 /tmp
 
+# Ignore the .env configuration file that contains private information
+/.env
+
 /public/uploads

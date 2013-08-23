@@ -1,65 +1,77 @@
-desc "This task automatically removes content that is old"
-task :disable_old_posts => :environment do
-  puts "Disabling old posts..."
-  Post.clean
-  puts "done."
-end
+require 'dotenv/tasks'
 
-# TODO: Generalize this to a campaign and add a campaign id argument
-task :launch_hit => :environment do
+namespace :app do
+  desc "This task automatically removes content that is old"
+  task :disable_old_posts => :environment do
+    puts "Disabling old posts..."
+    Post.clean
+    puts "done."
+  end
 
-	begin ; require 'rubygems' ; rescue LoadError ; end
+  desc "This task launches a new Mechanical Turk HIT"
+  task :launch_hit, [:campaign_id] => :environment do |t, args|
 
-	# Create a HIT for this environment
+    puts "AMAZON ACCESS KEY: " + ENV['AMAZON_ACCESS_KEY']
 
-	require 'ruby-aws'
-	@mturk = Amazon::WebServices::MechanicalTurkRequester.new :Host => :Production
+    puts "Requiring needed libraries"
+  	begin ; require 'rubygems' ; rescue LoadError ; end
+  	require 'ruby-aws'
 
-	# Use this line instead if you want to talk to Prod
-	#@mturk = Amazon::WebServices::MechanicalTurkRequester.new :Host => :Production
+    # Get the Campaign
+  
+    puts "Acquiring Campaign object " + args.to_s
+    @campaign = Campaign.find(args[:campaign_id])
 
+  	# Create a HIT for this environment
 
-	# Check to see if your account has sufficient funds
-	def hasEnoughFunds?
-	  available = @mturk.availableFunds
-	  puts "Got account balance: %.2f" % available
-	  return available > 0.055
-	end
+    puts "Getting an object to use MTurk"
+  	@mturk = Amazon::WebServices::MechanicalTurkRequester.new
 
-	def getHITUrl( hitTypeId )
-	  if @mturk.host =~ /sandbox/
-	    "http://workersandbox.mturk.com/mturk/preview?groupId=#{hitTypeId}" # Sandbox Url
-	  else
-	    "http://mturk.com/mturk/preview?groupId=#{hitTypeId}" # Production Url
-	  end
-	end
+  	# Use this line instead if you want to talk to Prod
+  	#@mturk = Amazon::WebServices::MechanicalTurkRequester.new :Host => :Production
 
-	# Create the BestImage HIT
-	def createHIT
+  	# Check to see if your account has sufficient funds
+  	def hasEnoughFunds?
+  	  puts "Checking for available MTurk balance..."
+  	  available = @mturk.availableFunds
+  	  puts "Got account balance: %.2f" % available
+  	  return available > 0.055
+  	end
 
-	  # Defining the location of the file containing the QuestionForm and the properties of the HIT
-	  rootDir = File.dirname $0;
-	  #questionFile = "/home/pkinnair/.rvm/gems/ruby-2.0.0-p247/gems/ruby-aws-1.6.0/samples/mturk/best_image/best_image.question";
-		questionFile = "config/recruit_twitterer.question";
-	  propertiesFile = "config/recruit_twitterer.properties";
+  	def getHITUrl( hitTypeId )
+  	  if @mturk.host =~ /sandbox/
+  	    "http://workersandbox.mturk.com/mturk/preview?groupId=#{hitTypeId}" # Sandbox Url
+  	  else
+  	    "http://mturk.com/mturk/preview?groupId=#{hitTypeId}" # Production Url
+  	  end
+  	end
+  
+  	# Create the BestImage HIT
+  	def createHIT(campaign)
 
-	  # Loading configuration properties from a HIT properties file.
-	  # In this sample, the qualification is defined in the properties file.
-	  props = Amazon::Util::DataReader.load( propertiesFile, :Properties )
-	  props[:Reward] = { :Amount => 0.50, :CurrencyCode => 'USD'}
-	  # Loading the question (QuestionForm) file.
-	  question = File.read( questionFile )
-	  # no validation
-	  result = @mturk.createHIT( {:Question => question}.merge(props) )
-	  puts "Created HIT: #{result[:HITId]}"
-	  puts "Url: #{getHITUrl( result[:HITTypeId] )}"
+  	  puts "Loading configuration properties from database."
+  	  # In this sample, the qualification is defined in the properties file.
+  	  props = Amazon::Util::DataReader.parse_properties(campaign.turk_properties)
+  	  props[:Reward] = { :Amount => 0.50, :CurrencyCode => 'USD'}
+  	  puts "Properties: " + props.to_s
+  	  # Loading the question (QuestionForm) file.
+  	  question = campaign.turk_question
+  	  puts "Parsed all configuration information"
 
-	  # save the HIT Id to a file so we don't lose it...
-	  Amazon::Util::DataReader.save( File.join( rootDir, "hits_created" ), [{:HITId => result[:HITId] }], :Tabular )
-	end
+  	  # no validation
+  	  puts "Creating HIT..."
+  	  result = @mturk.createHIT( {:Question => question}.merge(props) )
+  	  puts "Created HIT: " + result.to_s
+  	  
+  	  # Save the result to the database so we don't lose it
+  	  hit = TurkHit.new
+  	  hit.hit_id = result[:HITId]
+  	  hit.hit_type_id = result[:HITTypeId]
+  	  hit.save
+  	end
 
-	createHIT if hasEnoughFunds?
-
+  	createHIT(@campaign) if hasEnoughFunds?
+  end
 end
 
 task :decode_test_data => :environment do

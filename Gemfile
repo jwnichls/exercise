@@ -1,16 +1,11 @@
-#this is for test justice
 source 'https://rubygems.org'
 ruby "2.0.0"
 
-
-#gem 'rails', '3.2.13'
 gem 'rails', '4.0.0'
 ## these two are required for rails 4 compatibility and heroku
 gem 'protected_attributes'
 gem 'rails_12factor', group: :production
 gem 'heroku'
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'pg'
 gem 'koala'
@@ -31,6 +26,9 @@ gem 'jquery-validation-rails'
 gem 'twitter'
 gem 'ruby-aws', github: 'peterkinnaird/ruby-aws'
 gem "highline", "~> 1.6.19"
+
+# Put Twitter config variables into a separate file
+gem 'dotenv-rails', :groups => [:development, :production]
 
 group :development do
 	gem 'annotate'
