@@ -1,4 +1,12 @@
 GIT
+  remote: git://github.com/jwnichls/ruby-aws.git
+  revision: c7d72a4cf90655f96ef3375c6f4ec170d2e41f91
+  specs:
+    ruby-aws (1.6.1)
+      highline
+      nokogiri
+
+GIT
   remote: git://github.com/peterkinnaird/activerecord-session_store.git
   revision: eaa686145fd61ee02b8a02fa72e30bf525025bf3
   specs:
@@ -6,14 +14,6 @@ GIT
       actionpack (>= 4.0.0.beta, < 5)
       activerecord (>= 4.0.0.beta, < 5)
       railties (>= 4.0.0.beta, < 5)
-
-GIT
-  remote: git://github.com/peterkinnaird/ruby-aws.git
-  revision: 96b778078621cc8ed6886742efbd5675220b75d4
-  specs:
-    ruby-aws (1.6.1)
-      highline
-      nokogiri
 
 GEM
   remote: https://rubygems.org/

@@ -24,7 +24,7 @@ gem 'will_paginate'
 gem 'bitly'
 gem 'jquery-validation-rails'
 gem 'twitter'
-gem 'ruby-aws', github: 'peterkinnaird/ruby-aws'
+gem 'ruby-aws', github: 'jwnichls/ruby-aws'
 gem "highline", "~> 1.6.19"
 
 # Put Twitter config variables into a separate file
