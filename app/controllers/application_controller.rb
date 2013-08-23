@@ -2,11 +2,15 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   helper_method :admin?, :current_user, :valence_pass?, :valence, :master_user  
 
+  def restrict_to_admin
+    head :unauthorized unless admin?
+  end
+  
   private
 
   def admin?
-    if current_user || session[:uid]
-      return User.find(session[:uid]).user_level == "admin"
+    if current_user
+      return current_user.user_level == "admin"
     else
       return false
     end
