@@ -1,47 +1,51 @@
+Overview
+===
+
+This is a modification of the original project that allows for the running of multiple campaigns 
+from the same rails application.  There is no longer any need to deploy a separate modified version 
+of the application for each each campaign.
+
+I have not modified all of the instructions below to reflect this change, though I have done my best
+to make as many changes as I could.
+
+Requirements
+===
+
+This project uses Ruby 2.0.0 and Rails 4.  See the Gemfile for a complete list of gems.
+
 Installation and Running
 ===
 
-For each topic/environment you want to run, create a twitter account and a new heroku account
+Deploy the application to heroku or your platform of choice.
 
-Install heroku toolbelt and heroku:accounts (http://martyhaught.com/articles/2010/12/14/managing-multiple-heroku-accounts/)
+Login with your new environment-based twitter account. the first user is assumed to be the admin and 
+has special priveleges in the environment.  You can make other users admins later, though right now
+this must be done by setting the "user_level" field for the desired user in the database to "admin".
 
-run $ heroku accounts:add <some_arbitrary_name_that_describes_the_environment> --auto
+If you're running on heroku, add the scheduler addon
 
-authenticate to your heroku account
+Add the app:disable_post task to run however frequently you want. This is hard coded to remove posts > 3 days old.
 
-add a section to the project's .git/config file along the lines of (nojustice is the heroku:account name i'm using in this example):
+You can test any rake command with rake app:<command>
 
-[remote "heroku"]
-	url = git@heroku.nojustice:inojustice.git
+Set Up A Campaign
+===
 
-use $ heroku accounts:set <account_name>
+One you launch the system and login, you can go to the /campaigns/ page to create a campaign.  You must specify the 
+following:
 
+* Twitter User to lead the campaign (chosen from drop-down of all users in application)
+* Campaign name
+* Instructions for the posts page in HTML
+* Properties file for MTurk HITs
+* Question file for MTurk HITs
 
+Once you save this information, you will be directed to the front page of the campaign.  You can then fill out the survey 
+and enter some initial priming posts.
 
-to set the right account name when you're using it. you might want to add this line to your .rvmrc file for the project so it'll autoset the account when you're in the working directory
-
-
-Presumably you also want a private github/bitbucket/gitorious account for the project, so create and add that too
-
-Push the codebase to the heroku instance and login with your new environment-based twitter account. the first user is assumed to be the admin and has special priveleges in the environment.
-
-
-Before you can visit the site, you need to load the database. For some reason $ heroku run rake db:migrate has a problem so you might be better off loading with $ heroku run rake db:schema:load
-
-Things to modify
-====
-Add the scheduler addon to heroku
-Add the disable_post task to run however frequently you want. This is hard coded to remove posts > 3 days old.
-You can test any rake command with rake <command>
-
-Add the launch_hit task to scheduler. These hits will be based on config/recruit_twitterer.*
-
-Modify the topic of the campaign in 2 files:
-
-app/views/shared/_instructions.html.erb
-and
-app/views/static_pages/home.html.erb
-
+If you are using Heroku, you should also add the app:launch_hit[<campaign_id>] task to the scheduler. These hits will be 
+based on the data you specified above for your campaign.  You can test the HIT by running the app:launch_hit[<campaign_id>,1] 
+task. The extra parameter will force the task to use the sandbox instead of production.
 
 Connect to heroku db from a gui
 ===
