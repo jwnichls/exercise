@@ -3,9 +3,7 @@ class CampaignsController < ApplicationController
 
   # GET /campaigns
   def index
-    unless restrict_to_admin
-      @campaigns = Campaign.all
-    end
+    @campaigns = Campaign.all
   end
 
   # GET /campaigns/1
