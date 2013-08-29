@@ -66,7 +66,7 @@ class Post < ActiveRecord::Base
   	update_attributes(:vote_count => c)
     if c > 5
       logger.info("Tweeting content from master account")
-      Tweet.retweet(self.id,User.find_by_user_level("admin").id)
+      Tweet.retweet(self.id,self.campaign.user_id)
       logger.info("Master account tweeted")
     end
   	#update_attributes(:vote_count => Vote.where(post_id: self.id,  vote_type: 'up').count)
