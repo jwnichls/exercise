@@ -1,4 +1,3 @@
-* Use better markdown in the Readme.md file
 * Fix root route
 * Test: When campaign tweets are sent they come from the right account
 * Automatically set the correct campaign link when posting to Turk
