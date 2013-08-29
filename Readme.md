@@ -26,7 +26,7 @@ If you're running on heroku, add the scheduler addon
 
 Add the app:disable_post task to run however frequently you want. This is hard coded to remove posts > 3 days old.
 
-You can test any rake command with rake app:<command>
+You can test any rake command with rake app:&lt;command&gt;
 
 Set Up A Campaign
 ===
@@ -43,8 +43,8 @@ following:
 Once you save this information, you will be directed to the front page of the campaign.  You can then fill out the survey 
 and enter some initial priming posts.
 
-If you are using Heroku, you should also add the app:launch_hit[<campaign_id>] task to the scheduler. These hits will be 
-based on the data you specified above for your campaign.  You can test the HIT by running the app:launch_hit[<campaign_id>,1] 
+If you are using Heroku, you should also add the app:launch_hit\[&lt;campaign_id&gt;\] task to the scheduler. These hits will be 
+based on the data you specified above for your campaign.  You can test the HIT by running the app:launch_hit\[&lt;campaign_id&gt;,1\] 
 task. The extra parameter will force the task to use the sandbox instead of production.
 
 Connect to heroku db from a gui
