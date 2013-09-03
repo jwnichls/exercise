@@ -9,7 +9,7 @@ namespace :app do
   end
 
   desc "This task launches a new Mechanical Turk HIT"
-  task :launch_hit, [:campaign_id] => :environment do |t, args|
+  task :launch_hit, [:campaign_id,:sandbox_flag] => :environment do |t, args|
 
     puts "AMAZON ACCESS KEY: " + ENV['AMAZON_ACCESS_KEY']
 
@@ -24,12 +24,13 @@ namespace :app do
 
   	# Create a HIT for this environment
 
-    puts "Getting an object to use MTurk"
-  	@mturk = Amazon::WebServices::MechanicalTurkRequester.new
-
-  	# Use this line instead if you want to talk to Prod
-  	#@mturk = Amazon::WebServices::MechanicalTurkRequester.new :Host => :Production
-
+    puts "Getting an object to use MTurk " + (args[:sandbox_flag] ? "- using sandbox" : "- using production");
+    if (args[:sandbox_flag])
+  	  @mturk = Amazon::WebServices::MechanicalTurkRequester.new
+    else
+      @mturk = Amazon::WebServices::MechanicalTurkRequester.new :Host => :Production
+    end
+    
   	# Check to see if your account has sufficient funds
   	def hasEnoughFunds?
   	  puts "Checking for available MTurk balance..."
