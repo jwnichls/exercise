@@ -5,7 +5,7 @@ Iborg::Application.routes.draw do
   # Campaigns
   
   resources :campaigns do
-    resources :posts, :except => [:destroy] do
+    resources :posts, :except => [:index, :destroy] do
       member do
         get "vote_up"
         get "vote_down"

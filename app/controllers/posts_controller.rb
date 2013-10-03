@@ -24,7 +24,7 @@ class PostsController < ApplicationController
         flash[:success] = "Post created"
       end
       
-      redirect_to campaign_posts_path(@post.campaign)
+      redirect_to campaign_path(@post.campaign)
     else
       flash[:error] = "Post could not saved"
       render action: new
@@ -33,17 +33,6 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
-  end
-
-  def index
-    @campaign = Campaign.find(params[:campaign_id])
-    @posts = @campaign.posts.where(:deleted => 'false', :disabled => 'false').order('updated_at DESC')
-    
-    if current_user && !current_user.has_survey_for_campaign?(@campaign)
-      @survey = Survey.new
-      @survey.campaign = @campaign
-      @survey.user = current_user
-    end
   end
 
   def unpost   
@@ -56,7 +45,7 @@ class PostsController < ApplicationController
       flash[:error] = "Something went wrong. Post not deleted."
     end
 
-    redirect_to campaign_posts_path(@campaign)
+    redirect_to campaign_path(@campaign)
   end
 
   def disable   
@@ -69,7 +58,7 @@ class PostsController < ApplicationController
       flash[:error] = "Something went wrong. Post not deleted."
     end
     
-    redirect_to campaign_posts_path(@campaign)
+    redirect_to campaign_path(@campaign)
   end
   
   def tweet
@@ -94,7 +83,7 @@ class PostsController < ApplicationController
 			flash[:error] = "Error. Tweet not created"
 		end
 
-		redirect_to campaign_posts_path(@campaign)
+		redirect_to campaign_path(@campaign)
 	end
   
   def vote_up
@@ -102,7 +91,7 @@ class PostsController < ApplicationController
     
     vote(params[:id], "up")
     
-    redirect_to campaign_posts_path(@campaign)
+    redirect_to campaign_path(@campaign)
   end
   
   def vote_down
@@ -110,7 +99,7 @@ class PostsController < ApplicationController
     
     vote(params[:id], "down")
     
-    redirect_to campaign_posts_path(@campaign)
+    redirect_to campaign_path(@campaign)
   end
   
   private

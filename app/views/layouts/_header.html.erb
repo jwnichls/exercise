@@ -6,7 +6,7 @@
 				<% @campaign = Campaign.find(session[:campaign_id]) -%>
 			<% end -%>
 		  	<li class="breadcrumb">
-		  		<%= link_to 'Discussion', campaign_posts_path(@campaign) %>
+		  		<%= link_to 'Discussion', campaign_path(@campaign) %>
 		  	</li>
 	  	<% end -%>
 

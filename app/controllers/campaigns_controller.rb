@@ -13,6 +13,14 @@ class CampaignsController < ApplicationController
   	end
   	
   	session[:campaign_id] = @campaign.id
+  	
+    @posts = @campaign.posts.where(:deleted => 'false', :disabled => 'false').order('updated_at DESC')
+    
+    if current_user && !current_user.has_survey_for_campaign?(@campaign)
+      @survey = Survey.new
+      @survey.campaign = @campaign
+      @survey.user = current_user
+    end
   end
 
   # GET /campaigns/new
@@ -68,7 +76,7 @@ class CampaignsController < ApplicationController
 			flash[:success] = "You followed: @" + User.find(params[:followee]).t_nickname
 		end
 
-		redirect_to campaign_posts_path(@campaign)
+		redirect_to campaign_path(@campaign)
 	end
 
   private

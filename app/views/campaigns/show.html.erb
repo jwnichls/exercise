@@ -1,21 +1,57 @@
-<% provide(:title, 'Home') %>
+<% provide(:title, @campaign.name) %>
 
-<div class="panel">
-	<div class="display row">
-	<h1>Welcome to the <%= @campaign.name %></h1>
-	
+<% if current_user -%>
 
-	<% if current_user && current_user.has_survey_for_campaign?(@campaign) %>
-		<h3>Drive <%= link_to 'The Discussion', campaign_posts_path(@campaign) %></h3>
-	<% elsif current_user %>
-		<h3>Please complete a <%= link_to '3 question survey', campaign_posts_path(@campaign) %> to get started driving the discussion.</h3>	
-	<script type="text/javascript">
-    //window.location.href="/posts/"  // put your correct path in a string here
-  </script>
-	<% else %>
-		<h3>
-	  	<%= render 'shared/login_services' %>
-  	</h3>
-  <% end %>
-</div>
-</div>
+	<% if !current_user.has_survey_for_campaign?(@campaign)  %> <!-- logged in user hasn't finished survey. display survey -->
+		<%= render 'shared/survey' %>
+
+	  <%= render 'shared/hit_finished' %>
+	  <div id="postindex">
+	    <%= render 'shared/instructions' %>
+	      <div class="row display">
+	        <ul class="posts">
+	          <div class="create-new">
+	            <div class="large-12 columns">
+	              <%= link_to 'Create a new tweet', new_campaign_post_path(@campaign) %>
+	            </div>
+	          <div class="row display"> <!-- buffer space --> </div>
+
+	          </div>
+	        </ul>
+	      </div>
+	      <% if @posts.any? %>
+	        <ul class="posts">
+	          <%= render @posts %>
+	        </ul>
+	      <% end %>
+	    </div>
+	    <script type="text/javascript">
+	  $(document).ready(function() {
+	    $(".hitfinished").hide();
+	  });
+
+	  </script>
+	<% elsif valence_pass? -%>
+		<%= render 'shared/instructions' %>
+		  <div class="row display">
+				<ul class="posts">
+					<div class="create-new">
+						<div class="large-12 columns">
+							<%= link_to 'Create a new tweet', new_campaign_post_path(@campaign) %>
+						</div>
+					<div class="row display"> <!-- buffer space --> </div>
+
+					</div>
+				</ul>
+			</div>
+			<% if @posts.any? %>
+				<ul class="posts">
+					<%= render @posts %>
+				</ul>
+			<% end %>
+	<% else -%>
+  		<%= render 'shared/hit_finished' %>
+	<% end -%>
+<% else -%>
+	<%= render 'shared/login_services' %>
+<% end -%>
